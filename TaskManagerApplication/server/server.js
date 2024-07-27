@@ -11,6 +11,7 @@ app.use(
   cors({
     origin: "https://task-manager-dnde.netlify.app/",
     credentials: true,
+    methods: ["GET", "POST", "PATCH", "DELETE","PUT"],
   })
 );
 
