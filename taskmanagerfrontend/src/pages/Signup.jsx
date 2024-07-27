@@ -33,7 +33,7 @@ const Signup = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3201/api/auth/signup",
+        "https://task-manager-dnd-1.onrender.com/api/auth/signup",
         {
           name: `${formData.firstName + " " + formData.lastName}`,
           email: formData.email,

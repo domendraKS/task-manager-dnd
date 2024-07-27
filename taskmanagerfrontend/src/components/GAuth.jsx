@@ -23,7 +23,7 @@ const GAuth = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:3201/api/auth/google",
+        "https://task-manager-dnd-1.onrender.com/api/auth/google",
         {
           email: resultFromGoogle.user.email,
           name: resultFromGoogle.user.displayName,

@@ -47,7 +47,7 @@ const Home = () => {
   const onDragEnd = async (result) => {
     try {
       const response = await axios.patch(
-        `http://localhost:3201/api/task/update/${result.draggableId}`,
+        `https://task-manager-dnd-1.onrender.com/api/task/update/${result.draggableId}`,
         {
           status: result.destination.droppableId,
         },
@@ -81,7 +81,7 @@ const Home = () => {
     // setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:3201/api/task/getAll",
+        "https://task-manager-dnd-1.onrender.com/api/task/getAll",
         {
           withCredentials: true,
           headers: {
@@ -155,7 +155,7 @@ const Home = () => {
   const deleteTask = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3201/api/task/delete/${deleteTaskId}`,
+        `https://task-manager-dnd-1.onrender.com/api/task/delete/${deleteTaskId}`,
         {
           withCredentials: true,
           headers: {
@@ -176,7 +176,7 @@ const Home = () => {
   const editTask = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3201/api/task/update/${taskUpdateId}`,
+        `https://task-manager-dnd-1.onrender.com/api/task/update/${taskUpdateId}`,
         {
           title: formData.title,
           description: formData.description,

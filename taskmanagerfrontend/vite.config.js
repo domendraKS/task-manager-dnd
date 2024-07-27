@@ -5,7 +5,7 @@ import react from "@vitejs/plugin-react-swc";
 export default defineConfig({
   server: {
     proxy: {
-      "/api": "http://localhost:3201",
+      "/api": "https://task-manager-dnd-1.onrender.com",
       secure: false,
     },
   },

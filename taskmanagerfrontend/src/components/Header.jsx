@@ -17,7 +17,7 @@ const Header = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:3201/api/auth/signout",
+        "https://task-manager-dnd-1.onrender.com/api/auth/signout",
         {
           headers: {
             "Content-Type": "application/json",
