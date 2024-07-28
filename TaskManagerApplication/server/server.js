@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://task-manager-dnde.netlify.app/",
+    origin: "https://task-manager-dnde.netlify.app",
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE","PUT"],
   })
