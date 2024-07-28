@@ -7,13 +7,18 @@ import taskRoute from "./routes/task.route.js";
 
 const app = express();
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://task-manager-dnde.netlify.app",
-    credentials: true,
-    methods: ["GET", "POST", "PATCH", "DELETE","PUT"],
-  })
-);
+
+const corsOptions = {
+  origin: "https://task-manager-dnde.netlify.app",
+  credentials: true,
+  methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
+  allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"],
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+
+app.options("*", cors(corsOptions));
 
 app.listen(process.env.PORT, () => {
   DB_CONN();
