@@ -3,6 +3,7 @@ import errorHandler from "./errorHandler.js";
 
 const verifyUser = (req, res, next) => {
   const allCookies = req.headers.cookie;
+  console.log(allCookies);
   if (!allCookies) {
     return next(errorHandler(401, "Unauthorized"));
   }
