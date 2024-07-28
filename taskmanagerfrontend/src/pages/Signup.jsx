@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button, Label, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import GAuth from "./../components/GAuth";
+import api from "../components/axiosBase";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -32,21 +32,16 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post(
-        "https://task-manager-dnd-1.onrender.com/api/auth/signup",
-        {
-          name: `${formData.firstName + " " + formData.lastName}`,
-          email: formData.email,
-          password: formData.password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
-      navigate("/signin");
+      const response = await api.post("/api/auth/signup", {
+        name: `${formData.firstName + " " + formData.lastName}`,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (response.data.success) {
+        navigate("/signin");
+        return;
+      }
     } catch (error) {
       // console.error("Error signing up:", error);
       setError("Failed to sign up. Please try again.");

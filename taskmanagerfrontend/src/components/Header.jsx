@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { signOut } from "../redux/user/userSlice";
 import { FaUser } from "react-icons/fa";
-import axios from "axios";
+import api from "./axiosBase";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -16,15 +16,12 @@ const Header = () => {
   const handleLogout = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(
-        "https://task-manager-dnd-1.onrender.com/api/auth/signout",
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await api.post("/api/auth/signout", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
 
       if (response.data.success) {
         dispatch(signOut());

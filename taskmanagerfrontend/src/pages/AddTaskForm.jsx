@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Label, TextInput, Select, Textarea } from "flowbite-react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../components/axiosBase";
 
 const AddTaskForm = () => {
   const [formData, setFormData] = useState({
@@ -20,8 +20,8 @@ const AddTaskForm = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(
-        "https://task-manager-dnd-1.onrender.com/api/task/create",
+      const response = await api.post(
+        "/api/task/create",
         {
           title: formData.title,
           description: formData.description,

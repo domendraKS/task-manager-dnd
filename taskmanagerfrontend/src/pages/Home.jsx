@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import api from "../components/axiosBase";
 
 const Home = () => {
   const [tasks, setTasks] = useState([]);
@@ -34,7 +35,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!userTask) {
-      navigate("/signup");
+      navigate("/signin");
       return;
     }
     getAllTasks();
@@ -46,16 +47,10 @@ const Home = () => {
 
   const onDragEnd = async (result) => {
     try {
-      const response = await axios.patch(
-        `https://task-manager-dnd-1.onrender.com/api/task/update/${result.draggableId}`,
+      const response = await api.patch(
+        `/api/task/update/${result.draggableId}`,
         {
           status: result.destination.droppableId,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
         }
       );
       if (response.data.success) {
@@ -80,15 +75,7 @@ const Home = () => {
   const getAllTasks = async () => {
     // setLoading(true);
     try {
-      const response = await axios.get(
-        "https://task-manager-dnd-1.onrender.com/api/task/getAll",
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await api.get("/api/task/getAll");
 
       if (response.data.success) {
         setTasks(response.data.tasks);
@@ -154,15 +141,7 @@ const Home = () => {
 
   const deleteTask = async () => {
     try {
-      const response = await axios.delete(
-        `https://task-manager-dnd-1.onrender.com/api/task/delete/${deleteTaskId}`,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await api.delete(`/api/task/delete/${deleteTaskId}`);
       if (response.data.success) {
         setTasks(tasks.filter((t) => t._id !== deleteTaskId));
         cancelShowDeleteModal();
@@ -175,20 +154,12 @@ const Home = () => {
 
   const editTask = async () => {
     try {
-      const response = await axios.put(
-        `https://task-manager-dnd-1.onrender.com/api/task/update/${taskUpdateId}`,
-        {
-          title: formData.title,
-          description: formData.description,
-          status: formData.status,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await api.put(`/api/task/update/${taskUpdateId}`, {
+        title: formData.title,
+        description: formData.description,
+        status: formData.status,
+      });
+
       if (response.data.success) {
         getAllTasks();
         cancelShowEditModal();

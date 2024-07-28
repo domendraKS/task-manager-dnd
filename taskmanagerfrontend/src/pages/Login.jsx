@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Button, HR, Label, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
 import GAuth from "../components/GAuth";
+import api from "../components/axiosBase";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -25,18 +26,19 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "https://task-manager-dnd-1.onrender.com/api/auth/signin",
-        { email: formData.email, password: formData.password },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await api.post(`/api/auth/signin`, {
+        email: formData.email,
+        password: formData.password,
+      });
 
       if (response.data.success) {
+        // Cookies.set("userTokenTask", response.data.token, {
+        //   expires: 1,
+        //   sameSite: "None",
+        //   secure: true,
+        // });
+        localStorage.setItem("userTokenTask", response.data.token);
+
         dispatch(signInSuccess(response.data.user));
         navigate("/");
         return;

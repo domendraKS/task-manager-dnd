@@ -74,7 +74,12 @@ export const signin = async (req, res, next) => {
     return res
       .status(200)
       .cookie("userTokenTask", token, { httpOnly: true })
-      .json({ success: true, message: "Login Successfully", user: rest });
+      .json({
+        success: true,
+        message: "Login Successfully",
+        user: rest,
+        token,
+      });
   } catch (error) {
     return next(error);
   }
@@ -107,7 +112,12 @@ export const google = async (req, res, next) => {
       return res
         .status(200)
         .cookie("userTokenTask", token, { httpOnly: true })
-        .json({ success: true, message: "Login successful", user: rest });
+        .json({
+          success: true,
+          message: "Login successful",
+          user: rest,
+          token,
+        });
     } else {
       const generatePassword = Math.random().toString(36).slice(-8);
       const hashPass = bcryptjs.hashSync(generatePassword, 10);
@@ -129,7 +139,12 @@ export const google = async (req, res, next) => {
       return res
         .status(201)
         .cookie("userTokenTask", token, { httpOnly: true })
-        .json({ success: true, message: "Signup successfully", user: rest });
+        .json({
+          success: true,
+          message: "Signup successfully",
+          user: rest,
+          token,
+        });
     }
   } catch (error) {
     next(error);

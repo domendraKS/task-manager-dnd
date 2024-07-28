@@ -1,21 +1,18 @@
-import jwt from "jsonwebtoken";
 import errorHandler from "./errorHandler.js";
+import jwt from "jsonwebtoken";
 
-const verifyUser = (req, res, next) => {
-  const allCookies = req.headers.cookie;
-  if (!allCookies) {
-    return next(errorHandler(401, "Unauthorized"));
+export const verifyUser = async (req, res, next) => {
+  let token;
+
+  let checkToken = req.headers.authorization;
+  // console.log(checkToken);
+
+  if (checkToken && checkToken.startsWith("Bearer")) {
+    token = checkToken.split(" ")[1];
   }
 
-  const cookies = allCookies.split(";").reduce((cookiesObj, cookie) => {
-    const [name, value] = cookie.trim().split("=");
-    cookiesObj[name] = value;
-    return cookiesObj;
-  }, {});
-
-  const token = cookies.userTokenTask;
   if (!token) {
-    return next(errorHandler(401, "Unauthorized"));
+    next(errorHandler(401, "You are not Authenticated!"));
   }
 
   jwt.verify(token, process.env.COOKIE_SECRET_KEY, (err, user) => {

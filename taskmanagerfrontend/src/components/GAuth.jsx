@@ -4,9 +4,9 @@ import { app } from "./../Firebase";
 import { Button } from "flowbite-react";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { signInSuccess } from "../redux/user/userSlice";
+import api from "./axiosBase";
 
 const GAuth = () => {
   const auth = getAuth(app);
@@ -22,19 +22,10 @@ const GAuth = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post(
-        "https://task-manager-dnd-1.onrender.com/api/auth/google",
-        {
-          email: resultFromGoogle.user.email,
-          name: resultFromGoogle.user.displayName,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await api.post("/api/auth/google", {
+        email: resultFromGoogle.user.email,
+        name: resultFromGoogle.user.displayName,
+      });
 
       if (response.data.success) {
         dispatch(signInSuccess(response.data.user));
