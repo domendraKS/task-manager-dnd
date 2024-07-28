@@ -29,6 +29,7 @@ const GAuth = () => {
 
       if (response.data.success) {
         dispatch(signInSuccess(response.data.user));
+        localStorage.setItem("userTokenTask", response.data.token);
         navigate("/");
         return;
       }
