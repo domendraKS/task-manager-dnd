@@ -32,11 +32,6 @@ const Login = () => {
       });
 
       if (response.data.success) {
-        // Cookies.set("userTokenTask", response.data.token, {
-        //   expires: 1,
-        //   sameSite: "None",
-        //   secure: true,
-        // });
         localStorage.setItem("userTokenTask", response.data.token);
 
         dispatch(signInSuccess(response.data.user));

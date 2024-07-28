@@ -16,16 +16,12 @@ const Header = () => {
   const handleLogout = async () => {
     setLoading(true);
     try {
-      const response = await api.post("/api/auth/signout", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      });
+      const response = await api.post("/api/auth/signout");
 
       if (response.data.success) {
         dispatch(signOut());
         navigate("/signin");
+        localStorage.removeItem("userTokenTask");
         return;
       }
     } catch (error) {
